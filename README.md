@@ -53,6 +53,76 @@ A comprehensive, full-stack delivery management platform that connects customers
 - **Status Updates**: Live delivery progress tracking
 - **Connection Management**: Automatic reconnection handling
 
+## 🔌 Socket.io Real-time Communication
+
+### **How Socket.io Works in Routix**
+
+Socket.io enables **real-time, bidirectional communication** between the frontend (React) and backend (Node.js) in the Routix delivery platform.
+
+#### **🏗️ Architecture Overview**
+```
+┌─────────────────┐    Socket.io     ┌─────────────────┐
+│   Frontend      │◄────────────────►│   Backend       │
+│   (React)       │   Real-time      │   (Node.js)     │
+│                 │   Events         │                 │
+│ • Customer UI   │                  │ • Socket Server │
+│ • Driver UI     │                  │ • Event Emitter │
+│ • Admin UI      │                  │ • User Tracking │
+└─────────────────┘                  └─────────────────┘
+```
+
+#### **📡 Key Socket.io Events**
+
+**Events Emitted by Backend:**
+- `new_delivery_request` - New delivery created
+- `deliveryAssigned` - Driver assigned to delivery
+- `deliveryUpdated` - Delivery status changed
+- `delivery_deleted` - Delivery cancelled
+- `deliveryCompleted` - Delivery finished
+
+**Events Emitted by Frontend:**
+- `registerUser` - Customer registers with socket
+- `registerDriver` - Driver registers with socket
+
+#### **🔄 Real-time Event Flow**
+
+**1. New Delivery Request Flow:**
+```
+Customer Creates Request → API Call → Backend Creates Delivery → 
+Backend Emits "new_delivery_request" → ALL Connected Clients Receive → 
+Driver Request Board Updates → Driver Sees New Request
+```
+
+**2. Driver Accepts Delivery Flow:**
+```
+Driver Clicks Accept → API Call → Backend Updates Status → 
+Backend Emits "deliveryAssigned" → Customer Receives Update → 
+Customer Sees Driver Assignment
+```
+
+**3. Delivery Status Updates Flow:**
+```
+Driver Updates Status → API Call → Backend Updates Database → 
+Backend Emits "deliveryUpdated" → Customer Receives Update → 
+UI Updates with New Status
+```
+
+#### **🎯 Real-time Features Enabled**
+
+- **Live Delivery Notifications**: Instant updates when drivers are assigned
+- **Status Changes**: Real-time delivery progress updates
+- **Driver Request Management**: New requests appear instantly
+- **Cancellation Alerts**: Immediate notification if delivery is cancelled
+- **Admin Monitoring**: Real-time platform activity tracking
+
+#### **🔧 Technical Benefits**
+
+- **No Polling**: No need to constantly check for updates
+- **Efficient**: Only sends data when changes occur
+- **Scalable**: Handles multiple concurrent connections
+- **Instant Feedback**: Users see changes immediately
+- **Seamless Updates**: No page refreshes needed
+
 ## 🛠 Tech Stack
 
 ### Frontend
